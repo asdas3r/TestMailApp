@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestMailApp
 {
-    class Employee
+    public class Employee
     {
         public Employee() { }
 

@@ -13,37 +13,57 @@ namespace TestMailApp
     public partial class FormMain : Form
     {
         FormIncoming form1;
+        FormNewEdit form2;
         Form activeForm;
 
-        public FormMain()
+        public static int chosenID;
+
+        public FormMain(int ID)
         {
-            form1 = new FormIncoming();
+            chosenID = ID;
             InitializeComponent();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            ChangeProps(form1);
-            SwitchControl(form1);
+            RefreshForm();
         }
 
         private void panel1_Resize(object sender, EventArgs e)
         {
             if (activeForm != null)
             {
-                //label1.Text = panel1.Width.ToString();
                 SwitchControl(activeForm);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            form1 = new FormIncoming(this);
+            ChangeProps(form1);
             SwitchControl(form1);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonNew_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            form2 = new FormNewEdit(this);
+            ChangeProps(form2);
+            SwitchControl(form2);
+            MakeButtonsActive(false);
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            form2 = new FormNewEdit(this, form1.selectedMail());
+            ChangeProps(form2);
+            SwitchControl(form2);
+            MakeButtonsActive(false);
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            new DataAccess().DeleteMailsData(form1.selectedMail().ID);
+            RefreshForm();
         }
 
         public void ChangeProps(Form frm)
@@ -61,6 +81,17 @@ namespace TestMailApp
             frm.Size = panel1.Size;
             frm.Show();
             activeForm = frm;
+        }
+
+        public void MakeButtonsActive(bool ifActive)
+        {
+            this.buttonDelete.Visible = ifActive;
+            this.buttonUpdate.Visible = ifActive;
+        }
+
+        public void RefreshForm()
+        {
+            buttonIncoming.PerformClick();
         }
     }
 }

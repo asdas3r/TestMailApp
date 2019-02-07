@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TestMailApp
 {
-    class Mail
+    public class Mail
     {
-        private Tag[] _Tags;
+        private List<Tag> _Tags;
 
         public int ID { get; set; }
 
@@ -20,15 +21,35 @@ namespace TestMailApp
 
         public string Contents { get; set; }
 
-        public void SetTags(Tag[] tagsArray)
+        public void SetTags(List<Tag> tagsList)
         {
-            _Tags = (Tag[])tagsArray.Clone();
+            _Tags = new List<Tag>(tagsList);
         }
 
-        public Tag[] GetTags()
+        public List<Tag> GetTags()
         {
-            return (Tag[])_Tags.Clone();
+            return new List<Tag>(_Tags);
         }
 
+        public bool Equals(Mail other)
+        {
+            return this.ID == other.ID &&
+                this.Name.Equals(other.Name) &&
+                this.RegistrationDate.Equals(other.RegistrationDate) &&
+                this.SentFromTo.ID == other.SentFromTo.ID &&
+                this.TagsEqual(other.GetTags()) &&
+                this.Contents.Equals(other.Contents);
+        }
+
+        public bool TagsEqual(List<Tag> otherTags)
+        {
+            List<Tag> tags = GetTags();
+            if (tags.Count != otherTags.Count)
+                return false;
+            foreach (var n in tags)
+                if (!otherTags.Any(p => p.Name.Equals(n.Name)))
+                    return false;
+            return true;
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestMailApp
 {
-    class Tag
+    public class Tag
     {
         public Tag() { }
 

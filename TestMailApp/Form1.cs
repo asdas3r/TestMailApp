@@ -38,7 +38,7 @@ namespace TestMailApp
             }
             else
             {
-                FormMain form2 = new FormMain();
+                FormMain form2 = new FormMain(Convert.ToInt32(listBox1.SelectedValue));
                 form2.MinimumSize = this.MinimumSize;
                 form2.Size = this.Size;
                 form2.DesktopLocation = this.DesktopLocation;
