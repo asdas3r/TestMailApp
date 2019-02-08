@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -18,6 +19,7 @@ namespace TestMailApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            
         }
 
         public static string GetSafeString(this SqlDataReader reader, int column)

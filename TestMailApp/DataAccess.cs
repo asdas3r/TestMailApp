@@ -7,6 +7,8 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using TestMailApp.WS;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -22,27 +24,21 @@ namespace TestMailApp
         public List<Employee> GetEmployees()
         {
             List<Employee> employeesList = new List<Employee>();
-            SqlDataReader dataReader = null;
 
             try
             {
-                myConnection.Open();
-                SqlCommand getEmployeesCommand = new SqlCommand("select * from [dbo].[Employees]", myConnection);
-                dataReader = getEmployeesCommand.ExecuteReader();
-
-                while (dataReader.Read())
+                WebService ws = new WebService();
+                DataSet ds = ws.GetEmployees();
+                if (ds == null)
+                    return null;
+                foreach (DataRow row in ds.Tables["Employees"].Rows)
                 {
-                    employeesList.Add(new Employee(dataReader.GetInt32(0), dataReader.GetSafeString(1), dataReader.GetString(2), dataReader.GetSafeString(3), dataReader.GetSafeString(4)));
+                    employeesList.Add(new Employee(Convert.ToInt32(row["ID"].ToString()), row["Surname"].ToString(), row["Name"].ToString(), CheckNullString(row["Patronymic"].ToString()), row["Email"].ToString()));
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
-            }
-            finally
-            {
-                dataReader.Close();
-                myConnection.Close();
             }
 
             return employeesList;
@@ -51,27 +47,22 @@ namespace TestMailApp
         public List<Tag> GetTags()
         {
             List<Tag> tagsList = new List<Tag>();
-            SqlDataReader dataReader = null;
 
             try
             {
-                myConnection.Open();
-                SqlCommand getTagsCommand = new SqlCommand("select * from [dbo].[Tags]", myConnection);
-                dataReader = getTagsCommand.ExecuteReader();
-
-                while (dataReader.Read())
+                WebService ws = new WebService();
+                DataSet ds = ws.GetTags();
+                //tagsList = ds.Tables[0].AsEnumerable().Select(d => new Tag(d.Field<string>("Name"), d.Field<string>("Description"))).ToList();
+                if (ds == null)
+                    return null;
+                foreach (DataRow row in ds.Tables["Tags"].Rows)
                 {
-                    tagsList.Add(new Tag(dataReader.GetSafeString(0), dataReader.GetSafeString(1)));
+                    tagsList.Add(new Tag(row["Name"].ToString(), CheckNullString(row["Description"].ToString())));
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
-            }
-            finally
-            {
-                dataReader.Close();
-                myConnection.Close();
             }
 
             return tagsList;
@@ -80,76 +71,40 @@ namespace TestMailApp
         public List<Mail> GetMails(bool isSender, int chosenID)
         {
             List<Mail> mailsList = new List<Mail>();
-            SqlDataReader dataReader = null;
-            SqlDataReader innerReader = null;
 
             try
             {
-                myConnection.Open();
-                SqlParameter personID = new SqlParameter("@personID", SqlDbType.Int, 4);
-                personID.Value = chosenID;
-                SqlParameter paramIsSender = new SqlParameter("@paramIsSender", SqlDbType.Bit, 1);
-                paramIsSender.Value = isSender;
+                WebService ws = new WebService();
+                DataSet ds = ws.GetMails(isSender, chosenID);
 
-                SqlCommand getMailsCommand = new SqlCommand("select dbo.Mail.ID, dbo.Mail.Name, dbo.Mail.RegistrationDate, dbo.Mail.Text " +
-                    "from dbo.Mail INNER JOIN dbo.MailEmployees ON dbo.Mail.ID = dbo.MailEmployees.Mail_ID " +
-                    "where (dbo.MailEmployees.IsSender = @paramIsSender) AND (dbo.MailEmployees.Employee_ID = @personID)", myConnection);
-                getMailsCommand.Parameters.Add(personID);
-                getMailsCommand.Parameters.Add(paramIsSender);
-                dataReader = getMailsCommand.ExecuteReader();
-
-                while (dataReader.Read())
+                int rowNumber = 0;
+                foreach (DataRow row in ds.Tables["Mails"].Rows)
                 {
-                    Mail mailData = new Mail();
-                    mailData.ID = dataReader.GetInt32(0);
-                    mailData.Name = dataReader.GetSafeString(1);
-                    mailData.RegistrationDate = dataReader.GetDateTime(2).Date;
-                    mailData.Contents = dataReader.GetSafeString(3);
+                    Mail newMail = new Mail();
+                    newMail.ID = Convert.ToInt32(row["ID"].ToString());
+                    newMail.Name = row["Name"].ToString();
+                    newMail.RegistrationDate = Convert.ToDateTime(row["RegistrationDate"].ToString());
+                    newMail.Contents = row["Text"].ToString();
 
-                    SqlCommand innerCommand = new SqlCommand();
-                    innerCommand.Connection = myConnection;
-
-                    SqlParameter paramID = new SqlParameter("@paramID", SqlDbType.Int, 4);
-                    paramID.Value = Convert.ToInt32(mailData.ID);
-                    SqlParameter paramIsSender2 = new SqlParameter("@paramIsSender2", SqlDbType.Bit, 1);
-                    paramIsSender2.Value = Convert.ToBoolean(isSender);
-
-                    innerCommand.CommandText = "select [dbo].[Employees].* " +
-                        "from [dbo].[Employees] INNER JOIN [dbo].[MailEmployees] ON [dbo].[Employees].[ID] = [dbo].[MailEmployees].[Employee_ID] INNER JOIN [dbo].[Mail] ON [dbo].[MailEmployees].[Mail_ID] = [dbo].[Mail].[ID] " +
-                                               "where  ([dbo].[MailEmployees].[Mail_ID] = @paramID) AND (NOT ([dbo].[MailEmployees].[IsSender] = @paramIsSender2))";
-                    innerCommand.Parameters.Add(paramID);
-                    innerCommand.Parameters.Add(paramIsSender2);
-                    innerReader = innerCommand.ExecuteReader();
-                    while (innerReader.Read())
-                        mailData.SentFromTo = new Employee(innerReader.GetInt32(0), innerReader.GetSafeString(1), innerReader.GetSafeString(2), innerReader.GetSafeString(3), innerReader.GetSafeString(4));
-                    innerReader.Close();
-
-                    innerCommand.CommandText = "select [dbo].[Tags].* " +
-                        "from [dbo].[MailTags] INNER JOIN [dbo].[Tags] ON [dbo].[MailTags].[Tag_Name] = [dbo].[Tags].[Name] " +
-                                               "where  [dbo].[MailTags].[Mail_ID] = @paramID " +
-                                               "order by [dbo].[Tags].[Name]";
-                    innerReader = innerCommand.ExecuteReader();
-                    List<Tag> tagsList = new List<Tag>();
-                    while (innerReader.Read())
+                    foreach (var erow in ds.Tables["Mails"].Rows[rowNumber].GetChildRows("MailToEmployees"))
                     {
-
-                        tagsList.Add(new Tag(innerReader.GetSafeString(0), innerReader.GetSafeString(1)));
+                        newMail.SentFromTo = new Employee(Convert.ToInt32(erow["ID"].ToString()), erow["Surname"].ToString(), erow["Name"].ToString(), CheckNullString(erow["Patronymic"].ToString()), erow["Email"].ToString());
                     }
-                    mailData.SetTags(tagsList);
-                    innerReader.Close();
-                    innerCommand.Parameters.Clear();
 
-                    mailsList.Add(mailData);
+                    List<Tag> tagList = new List<Tag>();
+                    foreach (var trow in ds.Tables["Mails"].Rows[rowNumber].GetChildRows("MailToTags"))
+                    {
+                        tagList.Add(new Tag(trow["Name"].ToString(), CheckNullString(trow["Description"].ToString())));
+                    }
+                    newMail.SetTags(tagList);
+                    
+                    mailsList.Add(newMail);
+                    rowNumber++;
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
-            }
-            finally
-            {
-                dataReader.Close();
-                myConnection.Close();
             }
 
             return mailsList;
@@ -310,6 +265,14 @@ namespace TestMailApp
             {
                 MessageBox.Show(e.ToString());
             }
+        }
+
+        public static string CheckNullString(string str)
+        {
+            if (str.Equals("Отсутствует"))
+                return string.Empty;
+            else
+                return str;
         }
     }
 }

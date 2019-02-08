@@ -55,11 +55,12 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // ColumnHeader
             // 
             this.ColumnHeader.Text = "Название";
-            this.ColumnHeader.Width = 101;
+            this.ColumnHeader.Width = 150;
             // 
             // columnHeader1
             // 
@@ -69,17 +70,17 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Отправитель";
-            this.columnHeader2.Width = 87;
+            this.columnHeader2.Width = 210;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Тэги";
-            this.columnHeader3.Width = 84;
+            this.columnHeader3.Width = 210;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Содержание";
-            this.columnHeader4.Width = 133;
+            this.columnHeader4.Width = 400;
             // 
             // FormIncoming
             // 

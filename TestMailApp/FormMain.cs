@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -15,6 +17,7 @@ namespace TestMailApp
         FormIncoming form1;
         FormNewEdit form2;
         Form activeForm;
+        Thread th1;
 
         public static int chosenID;
 
@@ -22,6 +25,7 @@ namespace TestMailApp
         {
             chosenID = ID;
             InitializeComponent();
+            SetActiveUser();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -62,8 +66,13 @@ namespace TestMailApp
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            new DataAccess().DeleteMailsData(form1.selectedMail().ID);
-            RefreshForm();
+            DialogResult ans = MessageBox.Show("Будет произведено удаление записи. Восстановление записи будет невозможно. Вы уверены?", "Удаление", MessageBoxButtons.OKCancel);
+
+            if (ans == DialogResult.OK)
+            {
+                new DataAccess().DeleteMailsData(form1.selectedMail().ID);
+                RefreshForm();
+            }
         }
 
         public void ChangeProps(Form frm)
@@ -92,6 +101,37 @@ namespace TestMailApp
         public void RefreshForm()
         {
             buttonIncoming.PerformClick();
+        }
+
+        public void OpenSelectedItem(Mail selected)
+        {
+            form2 = new FormNewEdit(this, selected);
+            ChangeProps(form2);
+            SwitchControl(form2);
+            MakeButtonsActive(false);
+            form2.Disable();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.MinimumSize = this.MinimumSize;
+            form1.Size = this.Size;
+            form1.DesktopLocation = this.DesktopLocation;
+            form1.StartPosition = FormStartPosition.Manual;
+
+            this.Close();
+
+            th1 = new Thread(() => Application.Run(form1));
+            th1.SetApartmentState(ApartmentState.STA);
+            th1.Start();
+        }
+
+        private void SetActiveUser()
+        {
+            Employee person = new DataAccess().GetEmployees().Find(x => x.ID == Convert.ToInt32(chosenID));
+            label1.Text = "Пользователь: \n" +
+                person.FullInfo;
         }
     }
 }

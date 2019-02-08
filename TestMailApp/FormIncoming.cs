@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -38,7 +39,7 @@ namespace TestMailApp
                 }
                 if (tags.Count != 0)
                     tagsString = string.Concat(tagsString, tags[tags.Count - 1].Name);
-                ListViewItem item = new ListViewItem(new string[] { mailList[i].Name, mailList[i].RegistrationDate.ToString(), mailList[i].SentFromTo.Info, tagsString, mailList[i].Contents });
+                ListViewItem item = new ListViewItem(new string[] { mailList[i].Name, mailList[i].RegistrationDate.ToShortDateString(), mailList[i].SentFromTo.Info, tagsString, mailList[i].Contents });
                 item.Tag = i;
                 lvList.Add(item);
             }
@@ -58,6 +59,12 @@ namespace TestMailApp
         public Mail selectedMail()
         {
             return (mailList[Convert.ToInt32(listView1.SelectedItems[0].Tag)]);
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+                mainForm.OpenSelectedItem(selectedMail());
         }
     }
 }

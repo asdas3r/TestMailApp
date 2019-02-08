@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -26,8 +27,9 @@ namespace TestMailApp
             employeesList = dataAccess.GetEmployees();
 
             listBox1.DataSource = employeesList;
-            listBox1.DisplayMember = "Info";
+            listBox1.DisplayMember = "FullInfo";
             listBox1.ValueMember = "ID";
+
         }
 
         private void button1_Click(object sender, EventArgs e)

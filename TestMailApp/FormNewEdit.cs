@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClassLibrary;
 
 namespace TestMailApp
 {
@@ -28,6 +29,16 @@ namespace TestMailApp
             InitializeComponent();
             mailData = d;
             labelHeader.Text = "Изменение письма";
+        }
+
+        public void Disable()
+        {
+            this.textBox1.ReadOnly = true;
+            this.dateTimePicker1.Enabled = false;
+            this.buttonAccept.Visible = false;
+            this.buttonBack.Enabled = true;
+            this.checkedListBox1.SelectionMode = SelectionMode.None;
+            this.textBox3.ReadOnly = true;
         }
 
         private void FormNewEdit_Load(object sender, EventArgs e)
@@ -92,7 +103,7 @@ namespace TestMailApp
                 data.ID = 0;
             else
                 data.ID = mailData.ID;
-            if (textBox1.Text == "")
+            if (textBox1.Text == "" || dateTimePicker1.Value > DateTime.Today)
                 return null;
             data.Name = textBox1.Text;
             data.RegistrationDate = dateTimePicker1.Value;
@@ -110,6 +121,11 @@ namespace TestMailApp
             data.Contents = textBox3.Text;
 
             return data;
+        }
+
+        private void dateTimePicker1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
