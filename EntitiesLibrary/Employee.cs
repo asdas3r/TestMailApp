@@ -10,6 +10,11 @@ namespace EntitiesLibrary
     [DataContract]
     public class Employee
     {
+        private string _Surname;
+        private string _Name;
+        private string _Patronymic;
+        private string _Email;
+
         public Employee() { }
 
         public Employee(int id, string surname, string name, string patronymic, string email)
@@ -25,16 +30,32 @@ namespace EntitiesLibrary
         public int ID { get; set; }
 
         [DataMember]
-        public string Surname { get; set; }
+        public string Surname
+        {
+            get { return _Surname; }
+            set { _Surname = value.Trim(); }
+        }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _Name; }
+            set { _Name = value.Trim(); }
+        }
 
         [DataMember]
-        public string Patronymic { get; set; }
+        public string Patronymic
+        {
+            get { return _Patronymic; }
+            set { _Patronymic = value.Trim(); }
+        }
 
         [DataMember]
-        public string Email { get; set; }
+        public string Email
+        {
+            get { return _Email; }
+            set { _Email = value.Trim(); }
+        }
 
         public string Info
         {

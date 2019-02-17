@@ -1,0 +1,24 @@
+﻿CREATE PROCEDURE [dbo].[sp_DeleteMailsData]
+	@cID int
+AS
+BEGIN
+	BEGIN TRAN
+	BEGIN TRY
+		DELETE FROM MailEmployees
+		WHERE Mail_ID = @cID;
+
+		DELETE FROM MailTags
+		WHERE Mail_ID = @cID;
+
+		DELETE FROM Mail
+		WHERE ID = @cID;
+		
+		COMMIT TRAN
+	END TRY
+	BEGIN CATCH
+		IF (@@TRANCOUNT > 0)
+		BEGIN
+			ROLLBACK TRAN
+		END
+	END CATCH
+END

@@ -66,7 +66,7 @@ namespace TestMailApp
         private void SwitchInOut()
         {
             this.columnHeader2.Text = isIncoming ? "Отправитель" : "Получатель";
-            mailList = new DataAccess().GetMails(!isIncoming, FormMain.chosenID);
+            mailList = DataAccess.GetMails(!isIncoming, FormMain.chosenID);
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)

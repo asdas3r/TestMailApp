@@ -21,14 +21,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:53653/SqlDBService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:53653/DBService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SqlDBService.wsdl" MetadataType="Wsdl" ID="1db278f0-67e9-462e-b9ae-faba80e3d878" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?wsdl" />
-    <MetadataFile FileName="SqlDBService12.xsd" MetadataType="Schema" ID="71a4bff0-d66e-45ba-95d8-4229b0cb5bbc" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd1" />
-    <MetadataFile FileName="SqlDBService1.xsd" MetadataType="Schema" ID="05695c1a-0bcc-4909-8d37-52359c03eba3" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd2" />
-    <MetadataFile FileName="SqlDBService.xsd" MetadataType="Schema" ID="5554864a-995a-48e6-af96-4506d8edafd1" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd0" />
-    <MetadataFile FileName="SqlDBService.disco" MetadataType="Disco" ID="c6a72fa8-eba2-43f7-9c26-8b82a6ddcada" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?disco" />
+    <MetadataFile FileName="DBService.xsd" MetadataType="Schema" ID="e9867a0d-d8ce-4361-805a-884fe337a38b" SourceId="1" SourceUrl="http://localhost:53653/DBService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DBService.disco" MetadataType="Disco" ID="bd75423d-ff5b-436d-8f72-6dbcc015e4e3" SourceId="1" SourceUrl="http://localhost:53653/DBService.svc?disco" />
+    <MetadataFile FileName="DBService1.xsd" MetadataType="Schema" ID="d66afe76-08a3-49d0-bb3e-30c2a9860652" SourceId="1" SourceUrl="http://localhost:53653/DBService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DBService.wsdl" MetadataType="Wsdl" ID="50ab7d8d-9e49-4112-993a-3d66d98ee2ad" SourceId="1" SourceUrl="http://localhost:53653/DBService.svc?wsdl" />
+    <MetadataFile FileName="DBService2.xsd" MetadataType="Schema" ID="7b7d1215-34ca-42cf-87ff-2095ddbda5f2" SourceId="1" SourceUrl="http://localhost:53653/DBService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

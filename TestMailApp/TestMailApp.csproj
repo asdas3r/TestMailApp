@@ -119,14 +119,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Connected Services\WS\SqlDBService.wsdl" />
-    <None Include="Connected Services\WS\SqlDBService.xsd">
+    <None Include="Connected Services\WS\DBService.wsdl" />
+    <None Include="Connected Services\WS\DBService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WS\SqlDBService1.xsd">
+    <None Include="Connected Services\WS\DBService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WS\SqlDBService12.xsd">
+    <None Include="Connected Services\WS\DBService2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\EntitiesLibrary.Employee.datasource" />
@@ -181,9 +181,6 @@
     <WCFMetadataStorage Include="Connected Services\WS\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\WS\SqlDBService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\WS\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +191,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WS\DBService.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

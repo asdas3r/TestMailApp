@@ -13,16 +13,17 @@ using System.ServiceModel;
 
 namespace TestMailApp
 {
-    class DataAccess
+    static class DataAccess
     {
-        public  List<Employee> GetEmployees()
+        public static List<Employee> GetEmployees()
         {
             List<Employee> employeesList = new List<Employee>();
 
             try
             {
-                SqlDBServiceClient dws = new SqlDBServiceClient();
+                DBServiceClient dws = new DBServiceClient();
                 employeesList = dws.GetEmployees();
+                dws.Close();
             }
             catch (Exception ex)
             {
@@ -32,14 +33,15 @@ namespace TestMailApp
             return employeesList;
         }
 
-        public List<Tag> GetTags()
+        public static List<Tag> GetTags()
         {
             List<Tag> tagsList = new List<Tag>();
 
             try
             {
-                SqlDBServiceClient dws = new SqlDBServiceClient();
+                DBServiceClient dws = new DBServiceClient();
                 tagsList = dws.GetTags();
+                dws.Close();
             }
             catch (Exception ex)
             {
@@ -49,14 +51,15 @@ namespace TestMailApp
             return tagsList;
         }
 
-        public List<Mail> GetMails(bool isSender, int chosenID)
+        public static List<Mail> GetMails(bool isSender, int chosenID)
         {
             List<Mail> mailsList = new List<Mail>();
 
             try
             {
-                SqlDBServiceClient dws = new SqlDBServiceClient();
+                DBServiceClient dws = new DBServiceClient();
                 mailsList = dws.GetMails(isSender, chosenID);
+                dws.Close();
             }
             catch (Exception ex)
             {
@@ -66,13 +69,13 @@ namespace TestMailApp
             return mailsList;
         }
 
-        public void SetMailsData(Mail mailData)
+        public static void SetMailsData(Mail mailData)
         {
             try
             {
-                SqlDBServiceClient dws = new SqlDBServiceClient();
-
+                DBServiceClient dws = new DBServiceClient();
                 dws.SetMailsData(mailData);
+                dws.Close();
             }
             catch (Exception ex)
             {
@@ -80,12 +83,13 @@ namespace TestMailApp
             }
         }
 
-        public void DeleteMailsData(int ID)
+        public static void DeleteMailsData(int ID)
         {
             try
             {
-                SqlDBServiceClient dws = new SqlDBServiceClient();
+                DBServiceClient dws = new DBServiceClient();
                 dws.DeleteMailsData(ID);
+                dws.Close();
             }
             catch (Exception ex)
             {

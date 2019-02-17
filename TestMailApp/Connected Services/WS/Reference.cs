@@ -12,64 +12,64 @@ namespace TestMailApp.WS {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WS.ISqlDBService")]
-    public interface ISqlDBService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WS.IDBService")]
+    public interface IDBService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetEmployees", ReplyAction="http://tempuri.org/ISqlDBService/GetEmployeesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetEmployees", ReplyAction="http://tempuri.org/IDBService/GetEmployeesResponse")]
         System.Collections.Generic.List<EntitiesLibrary.Employee> GetEmployees();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetEmployees", ReplyAction="http://tempuri.org/ISqlDBService/GetEmployeesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetEmployees", ReplyAction="http://tempuri.org/IDBService/GetEmployeesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<EntitiesLibrary.Employee>> GetEmployeesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetTags", ReplyAction="http://tempuri.org/ISqlDBService/GetTagsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetTags", ReplyAction="http://tempuri.org/IDBService/GetTagsResponse")]
         System.Collections.Generic.List<EntitiesLibrary.Tag> GetTags();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetTags", ReplyAction="http://tempuri.org/ISqlDBService/GetTagsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetTags", ReplyAction="http://tempuri.org/IDBService/GetTagsResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<EntitiesLibrary.Tag>> GetTagsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetMails", ReplyAction="http://tempuri.org/ISqlDBService/GetMailsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetMails", ReplyAction="http://tempuri.org/IDBService/GetMailsResponse")]
         System.Collections.Generic.List<EntitiesLibrary.Mail> GetMails(bool isSender, int chosenID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/GetMails", ReplyAction="http://tempuri.org/ISqlDBService/GetMailsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/GetMails", ReplyAction="http://tempuri.org/IDBService/GetMailsResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<EntitiesLibrary.Mail>> GetMailsAsync(bool isSender, int chosenID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/SetMailsData", ReplyAction="http://tempuri.org/ISqlDBService/SetMailsDataResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/SetMailsData", ReplyAction="http://tempuri.org/IDBService/SetMailsDataResponse")]
         void SetMailsData(EntitiesLibrary.Mail data);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/SetMailsData", ReplyAction="http://tempuri.org/ISqlDBService/SetMailsDataResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/SetMailsData", ReplyAction="http://tempuri.org/IDBService/SetMailsDataResponse")]
         System.Threading.Tasks.Task SetMailsDataAsync(EntitiesLibrary.Mail data);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/DeleteMailsData", ReplyAction="http://tempuri.org/ISqlDBService/DeleteMailsDataResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/DeleteMailsData", ReplyAction="http://tempuri.org/IDBService/DeleteMailsDataResponse")]
         void DeleteMailsData(int ID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISqlDBService/DeleteMailsData", ReplyAction="http://tempuri.org/ISqlDBService/DeleteMailsDataResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDBService/DeleteMailsData", ReplyAction="http://tempuri.org/IDBService/DeleteMailsDataResponse")]
         System.Threading.Tasks.Task DeleteMailsDataAsync(int ID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ISqlDBServiceChannel : TestMailApp.WS.ISqlDBService, System.ServiceModel.IClientChannel {
+    public interface IDBServiceChannel : TestMailApp.WS.IDBService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class SqlDBServiceClient : System.ServiceModel.ClientBase<TestMailApp.WS.ISqlDBService>, TestMailApp.WS.ISqlDBService {
+    public partial class DBServiceClient : System.ServiceModel.ClientBase<TestMailApp.WS.IDBService>, TestMailApp.WS.IDBService {
         
-        public SqlDBServiceClient() {
+        public DBServiceClient() {
         }
         
-        public SqlDBServiceClient(string endpointConfigurationName) : 
+        public DBServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public SqlDBServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public DBServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public SqlDBServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public DBServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public SqlDBServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public DBServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         

@@ -31,8 +31,9 @@ namespace TestMailApp
             labelHeader.Text = "Изменение письма";
         }
 
-        public void Disable()
+        public void ReadOnly()
         {
+            this.labelHeader.Text = "Просмотр письма";
             this.textBox1.ReadOnly = true;
             this.dateTimePicker1.Enabled = false;
             this.buttonAccept.Visible = false;
@@ -43,16 +44,19 @@ namespace TestMailApp
 
         private void FormNewEdit_Load(object sender, EventArgs e)
         {
-            List<Tag> tags = new DataAccess().GetTags();
+            List<Tag> tags = DataAccess.GetTags();
             foreach (var t in tags)
             { 
                 checkedListBox1.Items.Add(t.Name);
             }
 
-            List<Employee> employeesList = new DataAccess().GetEmployees();
-            comboBox1.DataSource = employeesList;
+            comboBox1.DataSource = new List<Employee>(DataAccess.GetEmployees());
             comboBox1.DisplayMember = "Info";
             comboBox1.ValueMember = "ID";
+
+            comboBox2.DataSource = new List<Employee>(DataAccess.GetEmployees());
+            comboBox2.DisplayMember = "Info";
+            comboBox2.ValueMember = "ID";
 
             LoadEditInfo();
         }
@@ -65,6 +69,7 @@ namespace TestMailApp
             textBox1.Text = mailData.Name;
             dateTimePicker1.Value = mailData.RegistrationDate;
             comboBox1.SelectedIndex = comboBox1.FindString(mailData.SentFrom.Info);
+            comboBox2.SelectedIndex = comboBox2.FindString(mailData.SentTo.Info);
 
             foreach (var n in mailData.Tags)
             {
@@ -73,8 +78,6 @@ namespace TestMailApp
                     checkedListBox1.SetItemChecked(checkedListBox1.Items.IndexOf(n.Name), true);
                 }
             }
-
-
 
             textBox3.Text = mailData.Contents;
         }
@@ -94,7 +97,7 @@ namespace TestMailApp
             }
 
             if (mailData == null || !mailData.Equals(formMailData))
-                new DataAccess().SetMailsData(formMailData);
+                DataAccess.SetMailsData(formMailData);
             buttonBack.PerformClick();
         }
 
@@ -118,11 +121,11 @@ namespace TestMailApp
             
             data.Name = textBox1.Text;
             data.RegistrationDate = dateTimePicker1.Value;
-            data.SentFrom = new DataAccess().GetEmployees().Find( x => x.ID == Convert.ToInt32(comboBox1.SelectedValue));
-            data.SentTo = new DataAccess().GetEmployees().Find(x => x.ID == Convert.ToInt32(FormMain.chosenID));
+            data.SentFrom = DataAccess.GetEmployees().Find( x => x.ID == Convert.ToInt32(comboBox1.SelectedValue));
+            data.SentTo = DataAccess.GetEmployees().Find(x => x.ID == Convert.ToInt32(comboBox2.SelectedValue));
 
             List<Tag> tagList = new List<Tag>();
-            foreach (var n in new DataAccess().GetTags())
+            foreach (var n in DataAccess.GetTags())
             {
                 if (checkedListBox1.Items.Contains(n.Name) && checkedListBox1.GetItemChecked(checkedListBox1.Items.IndexOf(n.Name)))
                 {

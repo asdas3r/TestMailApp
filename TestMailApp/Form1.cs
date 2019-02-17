@@ -16,30 +16,25 @@ namespace TestMailApp
     public partial class Form1 : Form
     {
         List<Employee> employeesList;
-        DataAccess dataAccess;
         Thread th1;
 
         public Form1()
         {
             InitializeComponent();
 
-            SqlDBServiceClient dws = new SqlDBServiceClient();
-            dataAccess = new DataAccess();
             employeesList = new List<Employee>();
             try
             {
-                employeesList = dws.GetEmployees();
+                employeesList = DataAccess.GetEmployees();
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
             
-
             listBox1.DataSource = employeesList;
             listBox1.DisplayMember = "FullInfo";
             listBox1.ValueMember = "ID";
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,6 +56,11 @@ namespace TestMailApp
                 th1.SetApartmentState(ApartmentState.STA);
                 th1.Start();
             }
+        }
+
+        public void SetSelection(int val)
+        {
+            listBox1.SelectedValue = val;
         }
     }
 }

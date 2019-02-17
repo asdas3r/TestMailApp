@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Data;
-using System.Configuration;
+using System.Web.Configuration;
 using System.Data.SqlClient;
 using EntitiesLibrary;
 
@@ -13,7 +13,7 @@ namespace WcfServiceProject
 {
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "SqlDBService" в коде, SVC-файле и файле конфигурации.
     // ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы SqlDBService.svc или SqlDBService.svc.cs в обозревателе решений и начните отладку.
-    public class SqlDBService : ISqlDBService
+    public class SqlDBService : IDBService
     {
         public List<Employee> GetEmployees()
         {
@@ -231,7 +231,7 @@ namespace WcfServiceProject
 
         private string GetConnectionString()
         {
-            return "Data Source=DESKTOP-RSMRVQT\\SQLEXPRESS;Initial Catalog=Testmail;Integrated Security=True;MultipleActiveResultSets=true";
+            return WebConfigurationManager.ConnectionStrings["TestmailMSSQL"].ConnectionString;
         }
     }
 }

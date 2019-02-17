@@ -10,6 +10,9 @@ namespace EntitiesLibrary
     [DataContract]
     public class Tag
     {
+        private string _Name;
+        private string _Description;
+
         public Tag() { }
 
         public Tag(string name, string desciption)
@@ -19,9 +22,17 @@ namespace EntitiesLibrary
         }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _Name; }
+            set { _Name = value.Trim(); }
+        }
 
         [DataMember]
-        public string Description { get; set; }
+        public string Description
+        {
+            get { return _Description; }
+            set { _Description = value.Trim(); }
+        }
     }
 }

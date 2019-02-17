@@ -10,7 +10,8 @@ namespace EntitiesLibrary
     [DataContract]
     public class Mail
     {
-        private List<Tag> _Tags = new List<Tag>();
+        private string _Name;
+        private string _Contents;
 
         public Mail() { }
 
@@ -29,7 +30,11 @@ namespace EntitiesLibrary
         public int ID { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _Name; }
+            set { _Name = value.Trim(); }
+        }
 
         [DataMember]
         public DateTime RegistrationDate { get; set; }
@@ -41,14 +46,14 @@ namespace EntitiesLibrary
         public Employee SentTo;
 
         [DataMember]
-        public string Contents { get; set; }
+        public string Contents
+        {
+            get { return _Contents; }
+            set { _Contents = value.Trim(); }
+        }
 
         [DataMember]
-        public List<Tag> Tags
-        {
-            get { return _Tags; }
-            set { _Tags = value; }
-        }
+        public List<Tag> Tags { get; set; } = new List<Tag>();
 
         public bool Equals(Mail other)
         {

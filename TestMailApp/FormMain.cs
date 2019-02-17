@@ -85,7 +85,7 @@ namespace TestMailApp
 
             if (ans == DialogResult.OK)
             {
-                new DataAccess().DeleteMailsData(form1.selectedMail().ID);
+                DataAccess.DeleteMailsData(form1.selectedMail().ID);
                 RefreshForm(isOnIncoming);
             }
         }
@@ -127,7 +127,7 @@ namespace TestMailApp
             ChangeProps(form2);
             SwitchControl(form2);
             MakeButtonsActive(false);
-            form2.Disable();
+            form2.ReadOnly();
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -137,6 +137,7 @@ namespace TestMailApp
             form1.Size = this.Size;
             form1.DesktopLocation = this.DesktopLocation;
             form1.StartPosition = FormStartPosition.Manual;
+            form1.SetSelection(chosenID);
 
             this.Close();
 
@@ -147,7 +148,7 @@ namespace TestMailApp
 
         private void SetActiveUser()
         {
-            Employee person = new DataAccess().GetEmployees().Find(x => x.ID == Convert.ToInt32(chosenID));
+            Employee person = DataAccess.GetEmployees().Find(x => x.ID == Convert.ToInt32(chosenID));
             label1.Text = "Пользователь: \n" +
                 person.FullInfo;
         }
