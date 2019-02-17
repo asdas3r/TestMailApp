@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9f9fb47f-0fe7-4241-b2cb-adc2f6d1048b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:53653/SqlDBService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SqlDBService.wsdl" MetadataType="Wsdl" ID="1db278f0-67e9-462e-b9ae-faba80e3d878" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?wsdl" />
+    <MetadataFile FileName="SqlDBService12.xsd" MetadataType="Schema" ID="71a4bff0-d66e-45ba-95d8-4229b0cb5bbc" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SqlDBService1.xsd" MetadataType="Schema" ID="05695c1a-0bcc-4909-8d37-52359c03eba3" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SqlDBService.xsd" MetadataType="Schema" ID="5554864a-995a-48e6-af96-4506d8edafd1" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SqlDBService.disco" MetadataType="Disco" ID="c6a72fa8-eba2-43f7-9c26-8b82a6ddcada" SourceId="1" SourceUrl="http://localhost:53653/SqlDBService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

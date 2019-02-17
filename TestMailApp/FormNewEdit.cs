@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ClassLibrary;
+using EntitiesLibrary;
 
 namespace TestMailApp
 {
@@ -64,9 +64,9 @@ namespace TestMailApp
 
             textBox1.Text = mailData.Name;
             dateTimePicker1.Value = mailData.RegistrationDate;
-            comboBox1.SelectedIndex = comboBox1.FindString(mailData.SentFromTo.Info);
+            comboBox1.SelectedIndex = comboBox1.FindString(mailData.SentFrom.Info);
 
-            foreach (var n in mailData.GetTags())
+            foreach (var n in mailData.Tags)
             {
                 if (checkedListBox1.Items.Contains(n.Name))
                 {
@@ -74,25 +74,27 @@ namespace TestMailApp
                 }
             }
 
+
+
             textBox3.Text = mailData.Contents;
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            mainForm.RefreshForm();
+            mainForm.RefreshForm(mainForm.isOnIncoming);
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
         {
             Mail formMailData = GetMailFormData();
+
             if (formMailData == null)
             {
-                MessageBox.Show("Не все данные введены корректно", "Ошибка!");
                 return;
             }
 
             if (mailData == null || !mailData.Equals(formMailData))
-                new DataAccess().SetMailsData(formMailData, FormMain.chosenID);
+                new DataAccess().SetMailsData(formMailData);
             buttonBack.PerformClick();
         }
 
@@ -103,11 +105,21 @@ namespace TestMailApp
                 data.ID = 0;
             else
                 data.ID = mailData.ID;
-            if (textBox1.Text == "" || dateTimePicker1.Value > DateTime.Today)
+            if (textBox1.Text == "")
+            {
+                MessageBox.Show("Поле 'Название' не может быть пустым. Заполните это поле и повторите попытку.", "Ошибка");
                 return null;
+            }
+            if (dateTimePicker1.Value.Date > DateTime.Today)
+            {
+                MessageBox.Show("Дата регистрации письма не должна быть больше сегодняшней. Измените дату и повторите попытку.", "Ошибка");
+                return null;
+            }
+            
             data.Name = textBox1.Text;
             data.RegistrationDate = dateTimePicker1.Value;
-            data.SentFromTo = new DataAccess().GetEmployees().Find( x => x.ID == Convert.ToInt32(comboBox1.SelectedValue));
+            data.SentFrom = new DataAccess().GetEmployees().Find( x => x.ID == Convert.ToInt32(comboBox1.SelectedValue));
+            data.SentTo = new DataAccess().GetEmployees().Find(x => x.ID == Convert.ToInt32(FormMain.chosenID));
 
             List<Tag> tagList = new List<Tag>();
             foreach (var n in new DataAccess().GetTags())
@@ -117,7 +129,7 @@ namespace TestMailApp
                     tagList.Add(n);
                 }
             }
-            data.SetTags(tagList);
+            data.Tags = tagList;
             data.Contents = textBox3.Text;
 
             return data;

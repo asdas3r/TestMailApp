@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-using System.Configuration;
 using System.Data;
+using System.Configuration;
 using System.Data.SqlClient;
-using ClassLibrary;
+using EntitiesLibrary;
 
-namespace WebService
+namespace WebApplicationProject
 {
     /// <summary>
-    /// Сводное описание для WebService
+    /// Сводное описание для dbWebService
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // Чтобы разрешить вызывать веб-службу из скрипта с помощью ASP.NET AJAX, раскомментируйте следующую строку. 
     // [System.Web.Script.Services.ScriptService]
-    public class WebService : System.Web.Services.WebService
+    public class dbWebService : System.Web.Services.WebService
     {
-
         [WebMethod]
         public string HelloWorld()
         {
@@ -34,6 +33,7 @@ namespace WebService
             {
                 using (SqlDataAdapter adapter = new SqlDataAdapter())
                 {
+                    List<Employee> employeesList = new List<Employee>();
                     myConnection.Open();
                     SqlCommand getEmployeesCommand = new SqlCommand("select * from [dbo].[Employees]", myConnection);
                     adapter.SelectCommand = getEmployeesCommand;
@@ -166,7 +166,7 @@ namespace WebService
         }
 
         [WebMethod]
-        public void SetMailsData(Mail data, int recieverID)
+        public void SetMailsData(string[] mail, string[] tags, int recieverID)
         {
             
             using (SqlConnection myConnection = new SqlConnection(GetConnectionString()))
@@ -181,27 +181,27 @@ namespace WebService
                 param[0] = new SqlParameter("@recID", SqlDbType.Int, 4);
                 param[0].Value = Convert.ToInt32(recieverID);
                 param[1] = new SqlParameter("@cID", SqlDbType.Int, 4);
-                param[1].Value = Convert.ToInt32(data.ID);
+                param[1].Value = Convert.ToInt32(mail[0]);
                 param[2] = new SqlParameter("@cName", SqlDbType.NVarChar, 50);
-                param[2].Value = Convert.ToString(data.Name);
+                param[2].Value = Convert.ToString(mail[1]);
                 param[3] = new SqlParameter("@cDate", SqlDbType.Date, 3);
-                param[3].Value = Convert.ToDateTime(data.RegistrationDate);
+                param[3].Value = Convert.ToDateTime(mail[2]);
                 param[4] = new SqlParameter("@cSent", SqlDbType.Int, 4);
-                param[4].Value = Convert.ToInt32(data.SentFromTo.ID);
+                param[4].Value = Convert.ToInt32(mail[3]);
                 param[5] = new SqlParameter("@cContents", SqlDbType.NVarChar, -1);
-                param[5].Value = Convert.ToString(data.Contents);
+                param[5].Value = Convert.ToString(mail[4]);
                 param[6] = new SqlParameter("@cTag", SqlDbType.NVarChar, 50);
 
-                if (data.ID == 0)
-                    AddToSQL(data, param, setDataCommand);
+                if (Convert.ToInt32(mail[0]) == 0)
+                    AddToSQL(tags, param, setDataCommand);
                 else
-                    UpdateToSQL(data, param, setDataCommand);
+                    UpdateToSQL(tags, param, setDataCommand);
                 tran.Commit();
                 myConnection.Close();
             }
         }
 
-        private void AddToSQL(Mail data, SqlParameter[] param, SqlCommand comm)
+        private void AddToSQL(string[] tags, SqlParameter[] param, SqlCommand comm)
         {
             comm.Parameters.Add(param[2]);
             comm.Parameters.Add(param[3]);
@@ -219,14 +219,14 @@ namespace WebService
 
             comm.CommandText = "insert into [dbo].[MailTags] values (@cID, @cTag)";
             comm.Parameters.Add(param[6]);
-            foreach (var n in data.GetTags())
+            foreach (var n in tags)
             {
-                param[6].Value = Convert.ToString(n.Name);
+                param[6].Value = Convert.ToString(n);
                 comm.ExecuteNonQuery();
             }
         }
 
-        private void UpdateToSQL(Mail data, SqlParameter[] param, SqlCommand comm)
+        private void UpdateToSQL(string[] tags, SqlParameter[] param, SqlCommand comm)
         {
             comm.Parameters.Add(param[2]);
             comm.Parameters.Add(param[3]);
@@ -246,10 +246,37 @@ namespace WebService
 
             comm.CommandText = "insert into [dbo].[MailTags] values (@cID, @cTag)";
             comm.Parameters.Add(param[6]);
-            foreach (var n in data.GetTags())
+            foreach (var n in tags)
             {
-                param[6].Value = Convert.ToString(n.Name);
+                param[6].Value = Convert.ToString(n);
                 comm.ExecuteNonQuery();
+            }
+        }
+
+        [WebMethod]
+        public void DeleteMailsData(int ID)
+        {
+            using (SqlConnection myConnection = new SqlConnection(GetConnectionString()))
+            {
+                SqlTransaction tran;
+                myConnection.Open();
+                tran = myConnection.BeginTransaction();
+                SqlCommand command = myConnection.CreateCommand();
+                command.Transaction = tran;
+
+                SqlParameter cID = new SqlParameter("@cID", SqlDbType.Int, 4);
+                cID.Value = Convert.ToInt32(ID);
+
+                command.Parameters.Add(cID);
+                command.CommandText = "delete from [dbo].[MailEmployees] where [Mail_ID] = @cID";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "delete from [dbo].[MailTags] where [Mail_ID] = @cID";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "delete from [dbo].[Mail] where [ID] = @cID";
+                command.ExecuteNonQuery();
+                tran.Commit();
             }
         }
 
@@ -257,5 +284,14 @@ namespace WebService
         {
             return "Data Source=DESKTOP-RSMRVQT\\SQLEXPRESS;Initial Catalog=Testmail;Integrated Security=True";
         }
+
+        public static string CheckNullString(string str)
+        {
+            if (str.Equals("Отсутствует"))
+                return string.Empty;
+            else
+                return str;
+        }
+
     }
 }

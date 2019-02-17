@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
-namespace ClassLibrary
+namespace EntitiesLibrary
 {
+    [DataContract]
     public class Tag
     {
         public Tag() { }
 
-        public Tag(string nm, string desc)
+        public Tag(string name, string desciption)
         {
-            Name = nm;
-            Description = desc;
+            Name = name;
+            Description = desciption;
         }
 
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         public string Description { get; set; }
     }
 }

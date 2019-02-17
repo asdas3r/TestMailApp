@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using ClassLibrary;
+using EntitiesLibrary;
+using TestMailApp.WS;
 
 namespace TestMailApp
 {
@@ -22,9 +23,18 @@ namespace TestMailApp
         {
             InitializeComponent();
 
+            SqlDBServiceClient dws = new SqlDBServiceClient();
             dataAccess = new DataAccess();
             employeesList = new List<Employee>();
-            employeesList = dataAccess.GetEmployees();
+            try
+            {
+                employeesList = dws.GetEmployees();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            
 
             listBox1.DataSource = employeesList;
             listBox1.DisplayMember = "FullInfo";

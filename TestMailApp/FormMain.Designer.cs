@@ -31,8 +31,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonIncoming = new System.Windows.Forms.Button();
+            this.buttonOutgoing = new System.Windows.Forms.Button();
             this.buttonNew = new System.Windows.Forms.Button();
+            this.buttonIncoming = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
@@ -74,28 +75,54 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.buttonOutgoing, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.buttonNew, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.buttonIncoming, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.buttonNew, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.buttonLogout, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 5);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 5);
+            this.tableLayoutPanel2.Controls.Add(this.buttonLogout, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 6);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 7;
+            this.tableLayoutPanel2.RowCount = 8;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(174, 444);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // buttonOutgoing
+            // 
+            this.buttonOutgoing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOutgoing.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonOutgoing.Location = new System.Drawing.Point(24, 73);
+            this.buttonOutgoing.Name = "buttonOutgoing";
+            this.buttonOutgoing.Size = new System.Drawing.Size(147, 34);
+            this.buttonOutgoing.TabIndex = 6;
+            this.buttonOutgoing.Text = "Отправленные письма";
+            this.buttonOutgoing.UseVisualStyleBackColor = true;
+            this.buttonOutgoing.Click += new System.EventHandler(this.buttonOutgoing_Click);
+            // 
+            // buttonNew
+            // 
+            this.buttonNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNew.Location = new System.Drawing.Point(24, 123);
+            this.buttonNew.Name = "buttonNew";
+            this.buttonNew.Size = new System.Drawing.Size(147, 34);
+            this.buttonNew.TabIndex = 1;
+            this.buttonNew.Text = "+ Новое письмо";
+            this.buttonNew.UseVisualStyleBackColor = true;
+            this.buttonNew.Click += new System.EventHandler(this.buttonNew_Click);
             // 
             // buttonIncoming
             // 
             this.buttonIncoming.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonIncoming.BackColor = System.Drawing.SystemColors.Control;
             this.buttonIncoming.Location = new System.Drawing.Point(24, 23);
             this.buttonIncoming.Name = "buttonIncoming";
             this.buttonIncoming.Size = new System.Drawing.Size(147, 34);
@@ -104,17 +131,6 @@
             this.buttonIncoming.UseVisualStyleBackColor = true;
             this.buttonIncoming.Click += new System.EventHandler(this.button1_Click);
             // 
-            // buttonNew
-            // 
-            this.buttonNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNew.Location = new System.Drawing.Point(24, 73);
-            this.buttonNew.Name = "buttonNew";
-            this.buttonNew.Size = new System.Drawing.Size(147, 34);
-            this.buttonNew.TabIndex = 1;
-            this.buttonNew.Text = "+ Новое письмо";
-            this.buttonNew.UseVisualStyleBackColor = true;
-            this.buttonNew.Click += new System.EventHandler(this.buttonNew_Click);
-            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
@@ -122,7 +138,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.45238F));
             this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonUpdate, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 173);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 233);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -154,10 +170,10 @@
             // buttonLogout
             // 
             this.buttonLogout.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonLogout.Location = new System.Drawing.Point(57, 343);
+            this.buttonLogout.Location = new System.Drawing.Point(47, 370);
             this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(59, 34);
-            this.buttonLogout.TabIndex = 3;
+            this.buttonLogout.Size = new System.Drawing.Size(80, 38);
+            this.buttonLogout.TabIndex = 5;
             this.buttonLogout.Text = "Выйти";
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
@@ -166,7 +182,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 327);
+            this.label1.Location = new System.Drawing.Point(69, 354);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 4;
@@ -179,7 +195,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tableLayoutPanel1);
             this.IsMdiContainer = true;
-            this.MinimumSize = new System.Drawing.Size(500, 300);
+            this.MinimumSize = new System.Drawing.Size(716, 489);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Письма";
@@ -204,5 +220,6 @@
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonOutgoing;
     }
 }

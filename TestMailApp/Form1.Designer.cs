@@ -117,7 +117,7 @@ namespace TestMailApp
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(924, 489);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(500, 350);
+            this.MinimumSize = new System.Drawing.Size(716, 489);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Выбор пользователя";

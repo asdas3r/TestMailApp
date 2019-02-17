@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using ClassLibrary;
+using EntitiesLibrary;
 
 namespace TestMailApp
 {
@@ -18,6 +18,7 @@ namespace TestMailApp
         FormNewEdit form2;
         Form activeForm;
         Thread th1;
+        public bool isOnIncoming { get; set; }
 
         public static int chosenID;
 
@@ -30,7 +31,11 @@ namespace TestMailApp
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            RefreshForm();
+            buttonNew.Click += new System.EventHandler(buttonActive_Click);
+            buttonOutgoing.Click += new System.EventHandler(buttonActive_Click);
+            buttonIncoming.Click += new System.EventHandler(buttonActive_Click);
+            RefreshForm(true);
+            isOnIncoming = true;
         }
 
         private void panel1_Resize(object sender, EventArgs e)
@@ -43,9 +48,18 @@ namespace TestMailApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            form1 = new FormIncoming(this);
+            form1 = new FormIncoming(this, true);
             ChangeProps(form1);
             SwitchControl(form1);
+            isOnIncoming = true;
+        }
+
+        private void buttonOutgoing_Click(object sender, EventArgs e)
+        {
+            form1 = new FormIncoming(this, false);
+            ChangeProps(form1);
+            SwitchControl(form1);
+            isOnIncoming = false;
         }
 
         private void buttonNew_Click(object sender, EventArgs e)
@@ -54,6 +68,7 @@ namespace TestMailApp
             ChangeProps(form2);
             SwitchControl(form2);
             MakeButtonsActive(false);
+            isOnIncoming = true;
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -71,7 +86,7 @@ namespace TestMailApp
             if (ans == DialogResult.OK)
             {
                 new DataAccess().DeleteMailsData(form1.selectedMail().ID);
-                RefreshForm();
+                RefreshForm(isOnIncoming);
             }
         }
 
@@ -98,9 +113,12 @@ namespace TestMailApp
             this.buttonUpdate.Visible = ifActive;
         }
 
-        public void RefreshForm()
+        public void RefreshForm(bool toIncoming)
         {
-            buttonIncoming.PerformClick();
+            if (toIncoming)
+                buttonIncoming.PerformClick();
+            else
+                buttonOutgoing.PerformClick();
         }
 
         public void OpenSelectedItem(Mail selected)
@@ -132,6 +150,19 @@ namespace TestMailApp
             Employee person = new DataAccess().GetEmployees().Find(x => x.ID == Convert.ToInt32(chosenID));
             label1.Text = "Пользователь: \n" +
                 person.FullInfo;
+        }
+
+        private void buttonActive_Click(object sender, EventArgs e)
+        {
+            var buttons = tableLayoutPanel2.Controls.OfType<Button>();
+            foreach (var button in buttons)
+            {
+                button.BackColor = SystemColors.Control;
+                button.UseVisualStyleBackColor = true;
+            }
+
+            Button clicked = (Button)sender;
+            clicked.BackColor = Color.LightSalmon;
         }
     }
 }

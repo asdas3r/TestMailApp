@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using ClassLibrary;
+using EntitiesLibrary;
 
 namespace TestMailApp
 {
@@ -20,13 +20,6 @@ namespace TestMailApp
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
             
-        }
-
-        public static string GetSafeString(this SqlDataReader reader, int column)
-        {
-            if (!reader.IsDBNull(column))
-                return reader.GetString(column);
-            return string.Empty;
         }
     }
 }

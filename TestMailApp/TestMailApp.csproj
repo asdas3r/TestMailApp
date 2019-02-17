@@ -66,6 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\WS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -93,11 +98,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web References\WS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +119,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Connected Services\WS\SqlDBService.wsdl" />
+    <None Include="Connected Services\WS\SqlDBService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WS\SqlDBService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WS\SqlDBService12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\EntitiesLibrary.Employee.datasource" />
+    <None Include="Properties\DataSources\EntitiesLibrary.Mail.datasource" />
+    <None Include="Properties\DataSources\EntitiesLibrary.Tag.datasource" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -129,11 +143,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Web References\WS\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\WS\WebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -159,26 +168,32 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:57040/WebService.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\WS\</RelPath>
-      <UpdateFromURL>http://localhost:57040/WebService.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>TestMailApp_WS_WebService</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\WS\WebService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
-      <Project>{6ca71fc9-005b-4ff8-bfea-456e97501ab0}</Project>
-      <Name>ClassLibrary</Name>
+    <ProjectReference Include="..\EntitiesLibrary\EntitiesLibrary.csproj">
+      <Project>{56659e4b-95de-4966-8e9d-39ffba87011f}</Project>
+      <Name>EntitiesLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WcfServiceProject\WcfServiceProject.csproj">
+      <Project>{7b440a47-68fa-4feb-b481-e588439d0efd}</Project>
+      <Name>WcfServiceProject</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\WS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WS\SqlDBService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WS\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WS\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
